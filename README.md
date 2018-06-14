@@ -1,116 +1,86 @@
-# Machine Learning - Exercise 4
+# Machine Learning - Exercise 5
 
-A PyTorch implementation of a Neural Network which classifies an image to one of 10 clothing classes (Fashion MNIST).
-
-Following are five neural network models.
+CNNs & Transfer Learning on CIFAR-10 dataset.
 
 
-## 1. Basic NN
+## 1. My Neural Network
 
 ### Parameters
 
 * **Hidden layer(s):** Two hidden layers in sizes of 100 and 50.
 * **Number of epochs:** 10.
-* **Learning rate:** 0.01.
-* **Activation function:** ReLU.
-* **Optimizer:** AdaGrad
+* **Learning rate:** 0.001.
+* **Architecture:**
+    1.  Convolution layer (3 x 50)
+    2.  ReLU
+    3.  Pool 2D (2 x 2)
+    4.  Convolution layer (50 x 16)
+    5.  ReLU
+    6.  Pool 2D (2 x 2)
+    7.  Fully Connected (400 x 100)
+    8.  Batch Normalization 1D (100)
+    9.  ReLU
+    10. Fully Connected (100 x 50)
+    11. Batch Normalization 1D (50)
+    12. ReLU
+    13. Fully Connected (50 x 10)
+    14. Softmax
+* **Optimizer:** Adam
+* **Batch Size:** 128
+
 
 ### Results
 
-* **Training set accuracy:** 90.252%
-* **Validation set accuracy:** 88.098%
-* **Testing set accuracy:** 87.960%
-* **Average training set loss:** 0.265
-* **Average validation set loss:** 0.311
-* **Average testing loss sum:** 0.339
+* **Training set accuracy:** 78.745%
+* **Validation set accuracy:** 67.627%
+* **Testing set accuracy:** 68%
+* **Average training set loss:** 0.590
+* **Average validation set loss:** 0.899
+* **Average testing loss sum:** 0.9580
 
-![graph](https://github.com/aedeny/machine_learning-ex4/blob/master/graphs/Training_Loss_vs._Validation_Loss_Basic.png?raw=true)
+* **Confusion Matrix**:
+    ```
+    [[586  32  54  23  11   7  13   6 207  61]
+     [ 10 794   9   5   1   2   5   1  74  99]
+     [ 54  14 558  65  85  79  62  12  52  19]
+     [ 14  17  67 554  40 159  72   6  40  31]
+     [ 21  12  66  82 639  46  55  29  41   9]
+     [ 12   4  51 222  37 577  28  24  25  20]
+     [  9   8  30  69  31  33 780   1  31   8]
+     [ 13  14  37  60  69 120   7 613  17  50]
+     [ 18  28   7   8   2   2   2   0 910  23]
+     [ 11  78   7  12   0   4   2   3  83 800]]
+    ```
+![graph](https://github.com/aedeny/machine_learning-ex5/blob/master/graphs/Training_Loss_vs._Validation_My_Net.png?raw=true)
 
-## 2. NN With Dropout
+## 2. Transfer Learning using ResNet-18
 
 ### Parameters
 
-* **Hidden layer(s):** Two hidden layers in sizes of 100 and 50.
-* **Number of epochs:** 10.
-* **Learning rate:** 0.01.
-* **Activation function:** ReLU.
-* **Optimizer:** AdaGrad
-* **Dropout:** 0.1, 0.2, 0.25
+* **Number of epochs:** 2.
+* **Learning rate:** 0.1.
+* **Optimizer:** Adam
+* **Batch Size:** 100
 
 ### Results
 
-* **Training set accuracy:** 68.452%
-* **Validation set accuracy:** 88.040%
-* **Testing set accuracy:** 87.010%
-* **Average training set loss:** 0.913
-* **Average validation set loss:** 0.445
-* **Average testing loss sum:** 0.486
-![graph](https://github.com/aedeny/machine_learning-ex4/blob/master/graphs/Training_Loss_vs._Validation_Loss_Dropout.png?raw=true)
+* **Training set accuracy:** 75.782%
+* **Validation set accuracy:** 78.440%
+* **Testing set accuracy:** 77%
+* **Average training set loss:** 0.756
+* **Average validation set loss:** 0.006
+* **Average testing loss sum:** 0.0067
 
-
-## 3. NN With Batch Normalization
-
-### Parameters
-
-* **Hidden layer(s):** Two hidden layers in sizes of 100 and 50.
-* **Number of epochs:** 10.
-* **Learning rate:** 0.01.
-* **Activation function:** ReLU.
-* **Optimizer:** AdaGrad
-* **Batch Normalization:** 
-
-### Results
-
-* **Training set accuracy:** 91.071%
-* **Validation set accuracy:** 89.021%
-* **Testing set accuracy:** 88.150%
-* **Average training set loss:** 0.370
-* **Average validation set loss:** 0.390
-* **Average testing loss sum:** 0.420
-
-![graph](https://github.com/aedeny/machine_learning-ex4/blob/master/graphs/Training_Loss_vs._Validation_Loss_Batch_Normalization.png?raw=true)
-
-## 4. NN With Convolution
-
-### Parameters
-
-* **Hidden layer(s):** Two hidden layers in sizes of 100 and 50.
-* **Number of epochs:** 10.
-* **Learning rate:** 0.01.
-* **Activation function:** ReLU.
-* **Optimizer:** AdaGrad
-* **Convolution:** Conv2d (1 * 10, 10 * 20) with kernel of size 5.
-
-### Results
-
-* **Training set accuracy:** 89.577%
-* **Validation set accuracy:** 88.215%
-* **Testing set accuracy:** 88.300%
-* **Average training set loss:** 0.287
-* **Average validation set loss:** 0.312
-* **Average testing loss sum:** 0.325
-![graph](https://github.com/aedeny/machine_learning-ex4/blob/master/graphs/Training_Loss_vs._Validation_Loss_Convolution.png?raw=true)
-
-
-## 5. Combined NN
-
-### Parameters
-
-* **Hidden layer(s):** Two hidden layers in sizes of 100 and 50.
-* **Number of epochs:** 10.
-* **Learning rate:** 0.01.
-* **Activation function:** ReLU.
-* **Optimizer:** AdaGrad
-* **Dropout:** 0.1, 0.2, 0.25
-* **Convolution:** Conv2d (1 * 10, 10 * 20) with kernel of size 5.
-
-### Results
-
-* **Training set accuracy:** 68.346%
-* **Validation set accuracy:** 89.594%
-* **Testing set accuracy:** 89.340%
-* **Average training set loss:** 0.934
-* **Average validation set loss:** 0.468
-* **Average loss sum:** 0.483
-
-![graph](https://github.com/aedeny/machine_learning-ex4/blob/master/graphs/Training_Loss_vs._Validation_Loss_Combined.png?raw=true)# machine_learning-ex5
+* **Confusion Matrix**:
+    ```
+    [[899   7  39   8   1   1   3   6  22  14]
+     [ 32 900   6   4   0   1   3   5   5  44]
+     [ 43   5 844  33  23   7  29  12   2   2]
+     [ 26   7  94 719  14  61  41  27   3   8]
+     [ 27   4 163  43 607  17  48  85   3   3]
+     [ 12   5  75 176  17 646  22  43   1   3]
+     [ 15   6  99  38  14   9 809   7   1   2]
+     [ 33   5  58  26  27  15   9 816   1  10]
+     [170  39  25  10   1   2   2   5 727  19]
+     [ 48  89   6   9   0   0   2   7  12 827]]
+    ```
