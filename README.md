@@ -51,7 +51,7 @@ CNNs & Transfer Learning on CIFAR-10 dataset.
      [ 18  28   7   8   2   2   2   0 910  23]
      [ 11  78   7  12   0   4   2   3  83 800]]
     ```
-![graph](https://github.com/aedeny/machine_learning-ex5/blob/master/graphs/Training_Loss_vs._Validation_My_Net.png?raw=true)
+![graph](https://github.com/aedeny/machine_learning-ex5/blob/master/Graphs/Training_Loss_vs._Validation_Loss_My_Net.png?raw=true)
 
 ## 2. Transfer Learning using ResNet-18
 
