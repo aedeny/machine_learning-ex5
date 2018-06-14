@@ -59,10 +59,10 @@ def train(epoch, model, train_loader, optimizer, batch_size):
         optimizer.zero_grad()
         output = model(data)
 
-        # loss = f.nll_loss(output, labels, size_average=True)
-        # train_loss += loss.item()
-        loss = criterion(output, labels)
-        train_loss += criterion(output, labels)
+        loss = f.nll_loss(output, labels, size_average=True)
+        train_loss += loss.item()
+        # loss = criterion(output, labels)
+        # train_loss += criterion(output, labels)
 
         loss.backward()
         optimizer.step()
@@ -88,8 +88,8 @@ def validate(epoch, model, valid_loader, batch_size):
             label = label.cuda()
         output = model(data)
 
-        validation_loss += criterion(output, label)
-        # validation_loss += f.nll_loss(output, label, size_average=False).data.item()
+        # validation_loss += criterion(output, label)
+        validation_loss += f.nll_loss(output, label, size_average=False).data.item()
         pred = output.data.max(1, keepdim=True)[1]
         correct_valid += pred.eq(label.data.view_as(pred)).cpu().sum()
 
@@ -116,8 +116,8 @@ def test(learning_model, test_loader):
         output = learning_model(data)
 
         # Sums up the batch loss.
-        test_loss += criterion(output,target)
-        # test_loss += f.nll_loss(output, target, size_average=False).item()
+        # test_loss += criterion(output, target)
+        test_loss += f.nll_loss(output, target, size_average=False).item()
 
         # Gets index of max log-probability.
         prediction = output.data.max(1, keepdim=True)[1]
@@ -130,9 +130,8 @@ def test(learning_model, test_loader):
         for t in target:
             y_tag_predications.append(t.item())
 
-    conf_matrix = confusion_matrix(y_tag_predications,y_predictions)
+    conf_matrix = confusion_matrix(y_tag_predications, y_predictions)
     print(conf_matrix)
-
 
     test_loss /= len(test_loader.dataset)
     print('\nTesting Set: Average Loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
@@ -237,16 +236,15 @@ def main():
         resnet_model.fc.cuda()
 
     # Trains MyNet
-    # my_net_t = transforms.Compose([transforms.ToTensor(),
-    #                                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
-    # my_train(10, my_net_model, 256, my_net_optimizer, 0.2, my_net_t)
+    my_net_t = transforms.Compose([transforms.ToTensor(),
+                                   transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
+    my_train(10, my_net_model, 256, my_net_optimizer, 0.2, my_net_t)
 
     # Trains ResNet
-    resnet_t = transforms.Compose([transforms.Resize(224), transforms.ToTensor(),
-                                   transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
-    my_train(2, resnet_model, 100, resnet_optimizer, 0.2, resnet_t)
+    # resnet_t = transforms.Compose([transforms.Resize(224), transforms.ToTensor(),
+    #                                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
+    # my_train(2, resnet_model, 100, resnet_optimizer, 0.2, resnet_t)
 
 
 if __name__ == '__main__':
     main()
-
